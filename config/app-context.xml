@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:jee="http://www.springframework.org/schema/jee" 
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd 
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+        http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx-3.2.xsd 
+        http://www.springframework.org/schema/jee 
+        http://www.springframework.org/schema/jee/spring-jee-3.2.xsd 
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-3.2.xsd"
+    default-autowire="byName">
+    <!-- 使用annotation 自动注册bean 
+    <context:annotation-config/>
+    <context:component-scan base-package="com.xticfc.modules.test"></context:component-scan>
+    -->
+    
+    <!-- 配置文件读取 -->
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:/jdbc.properties</value>
+				<value>classpath:/hibernate.properties</value>
+				<value>classpath:/log4j.properties</value>
+				<value>classpath:/messages_en.properties</value>
+				<value>classpath:/messages_zh.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	
+	
+	<!-- 开启AOP监听 只对当前配置文件有效 -->
+	<aop:aspectj-autoproxy expose-proxy="true"/>
+	
+	<!-- 开启注解事务 只对当前配置文件有效 -->
+  	<tx:annotation-driven transaction-manager="txManager"/>
+
+    <bean id="txManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <tx:advice id="txAdvice" transaction-manager="txManager">
+        <tx:attributes>
+            <tx:method name="save*" propagation="REQUIRED" />
+            <tx:method name="add*" propagation="REQUIRED" />
+            <tx:method name="create*" propagation="REQUIRED" />
+            <tx:method name="insert*" propagation="REQUIRED" />
+            <tx:method name="update*" propagation="REQUIRED" />
+            <tx:method name="upload*" propagation="REQUIRED" />
+            <tx:method name="merge*" propagation="REQUIRED" />
+            <tx:method name="del*" propagation="REQUIRED" />
+            <tx:method name="remove*" propagation="REQUIRED" />
+            <tx:method name="put*" propagation="REQUIRED" />
+            <tx:method name="use*" propagation="REQUIRED"/>
+            <tx:method name="log*" propagation="REQUIRED"/>
+            <!--hibernate4必须配置为开启事务 否则 getCurrentSession()获取不到-->
+            <tx:method name="get*" propagation="REQUIRED" read-only="true" />
+            <tx:method name="count*" propagation="REQUIRED" read-only="true" />
+            <tx:method name="find*" propagation="REQUIRED" read-only="true" />
+            <tx:method name="list*" propagation="REQUIRED" read-only="true" />
+            <tx:method name="*" read-only="true" />
+        </tx:attributes>
+    </tx:advice>
+    <aop:config expose-proxy="true">
+        <!-- 只对业务逻辑层实施事务 -->
+        <aop:pointcut id="txPointcut" expression="execution(* com.xticfc..service..*.*(..))" />
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
+    </aop:config>
+    
+    <!-- 自动扫描测试用service -->
+    <context:component-scan base-package="text.service"></context:component-scan>
+    
+    <!--  国际化配置 -->  
+	<bean id="messageSource"  
+	    class="org.springframework.context.support.ResourceBundleMessageSource">  
+	    <property name="basenames" value="messages" />  
+	</bean>
+    
+    <!--	javaMailSender -->
+	<bean id="sender" class="org.springframework.mail.javamail.JavaMailSenderImpl" >
+		<property name= "host" value="smtp.163.com"/>
+		<property name="username" value="zzyzzy789"/>
+		<property name="password" value="i174l217y5031"/>
+		<property name="javaMailProperties">
+			<props> 
+				<prop key="mail.smtp.auth">true</prop> 
+			</props> 
+		</property> 
+	</bean> 
+    
+	<!-- 需要由spring注入的bean定义 -->
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"/>
+    
+    
+    <bean id="commonDao" class="com.xticfc.dao.CommonDao"/>
+    <bean id="userDao" class="com.xticfc.dao.UserDao"/>
+    <bean id="orgDao" class="com.xticfc.dao.OrgDao"/>
+    <bean id="funcDao" class="com.xticfc.dao.FuncDao"/>
+    <bean id="dinnerDao" class="com.xticfc.dao.DinnerDao"/>
+    <bean id="treeDao" class="com.xticfc.dao.TreeDao"/>
+    
+    
+    <bean id="sysService" class="com.xticfc.service.SysService"/>
+    <bean id="uploadService" class="com.xticfc.service.UploadService"/>
+    <bean id="orgService" class="com.xticfc.service.OrgService"/>
+    <bean id="funcService" class="com.xticfc.service.FuncService"/>
+    <bean id="mailService" class="com.xticfc.service.MailService"/>
+    <bean id="dinnerService" class="com.xticfc.service.DinnerService"/>
+    <bean id="treeService" class="com.xticfc.service.TreeService"/>
+    
+</beans>
