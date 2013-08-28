@@ -1,5 +1,6 @@
 package com.xticfc.controller;
 
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.xticfc.entity.Dinner;
 import com.xticfc.service.DinnerService;
 import com.xticfc.util.StringUtil;
@@ -33,12 +36,14 @@ public class JqGridController {
 	@RequestMapping(value="/list")
 	public String list(HttpServletRequest request,
 			HttpServletResponse response) throws Exception{
+		Enumeration<String> e = request.getParameterNames();
+		Map<String,String[]> map1 = request.getParameterMap();
 		int start = ServletRequestUtils.getIntParameter(request, "page", 1)-1;//当前页数，第1页会传1
-		String nd = request.getParameter("nd");		//不清楚
+		String nd = request.getParameter("nd");		//请求的时间
 		String _search = request.getParameter("_search");		//搜索
 		int size = ServletRequestUtils.getIntParameter(request, "rows",0);//页面上要显示多少条记录
 		String order = StringUtil.getOrderString(request);
-		
+		System.out.println(System.currentTimeMillis());
 		List<Dinner> list = dinnerService.list(start, size, order);
 		int count = dinnerService.count();
 		Map<String,Object> map = new HashMap<String, Object>();
@@ -46,11 +51,8 @@ public class JqGridController {
 		map.put("total", StringUtil.getPageNum(count, size));
 		map.put("records", count);
 		map.put("rows", list);
-		JsonConfig jsonConfig = StringUtil.getJsonConfig();
-		JSONArray j = JSONArray.fromObject(map, jsonConfig);
-		String result = j.toString();
-		result = result.substring(1, result.length()-1);
-		StringUtil.writeToWeb(result, "json", response);
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+		StringUtil.writeToWeb(gson.toJson(map), "json", response);
 		return null;
 	}
 	public DinnerService getDinnerService() {

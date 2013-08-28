@@ -12,9 +12,7 @@
 <script src="${ctx }/js/validform_v5.2_min.js" type="text/javascript"></script>
 <link rel="stylesheet" href="${ctx }/css/zTreeStyle/zTreeStyle.css" type="text/css">
 <link rel="stylesheet" href="${ctx }/css/ui/jquery-ui-1.10.3.custom.min.css">
-<script src="${ctx }/js/ztree/jquery.ztree.core-3.5.min.js" type="text/javascript"></script>
-<script src="${ctx }/js/ztree/jquery.ztree.excheck-3.5.min.js" type="text/javascript"></script>
-<script src="${ctx }/js/ztree/jquery.ztree.exedit-3.5.min.js" type="text/javascript"></script>
-<script src="${ctx }/js/ztree/jquery.ztree.exhide-3.5.min.js" type="text/javascript"></script>
+<link rel="stylesheet" href="${ctx }/css/jqGrid/ui.jqgrid.css">
+<script src="${ctx }/js/ztree/jquery.ztree.all-3.5.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="${ctx }/js/jqGrid/jquery.jqGrid.min.js"></script>
 <script type="text/javascript" src="${ctx }/js/jqGrid/i18n/grid.locale-cn.js"></script>

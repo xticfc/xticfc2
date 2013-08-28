@@ -17,7 +17,7 @@ public class TreeService {
 
 	TreeDao treeDao;
 
-	public JSONArray getChildren(String id){
+	public List<OrgTable> getChildren(String id){
 		List<OrgTable> orgList = this.getChildrenById(id);
 		OrgTable orgtable;
 		if(null != orgList && orgList.size() > 0){
@@ -31,15 +31,12 @@ public class TreeService {
 				}
 			}
 		}
-		JsonConfig jsonConfig = StringUtil.getJsonConfig();
-		JSONArray j = JSONArray.fromObject(orgList, jsonConfig);
-		return j;
+		return orgList;
 	}
 	
 	
-	public JSONArray getAll(String id){
-		JSONArray j  = (JSONArray) getChildren(id);
-		return j;
+	public List<OrgTable> getAll(String id){
+		return getChildren(id);
 	}
 	
 	

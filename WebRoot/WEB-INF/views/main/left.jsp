@@ -4,7 +4,7 @@
 <head>
 <%@ include file="/common/meta.jsp"%>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>县级系统</title>
+<title>xticfc2</title>
 <script language="JavaScript" type="text/javascript" src="${ctx }/js/qiehuan.js"></script>
 <script src="${ctx }/js/prototype.lite.js" type="text/javascript"></script>
 <script src="${ctx }/js/moo.fx.js" type="text/javascript"></script>
