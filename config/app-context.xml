@@ -18,9 +18,16 @@
         http://www.springframework.org/schema/context/spring-context-3.2.xsd"
     default-autowire="byName">
     <!-- 使用annotation 自动注册bean 
-    <context:annotation-config/>
-    <context:component-scan base-package="com.xticfc.modules.test"></context:component-scan>
     -->
+    <context:annotation-config/>
+    <context:component-scan base-package="com.xticfc">
+    	<context:include-filter type="regex" expression=".*Service"/>
+		<context:include-filter type="regex" expression=".*Dao"/>
+    </context:component-scan>
+    
+    <import resource="classpath:/app-db.xml"/>
+    <import resource="classpath:/app-quartz.xml"/>
+<!--     <import resource="classpath:/app-aop.xml"/> -->
     
     <!-- 配置文件读取 -->
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -76,7 +83,7 @@
     </aop:config>
     
     <!-- 自动扫描测试用service -->
-    <context:component-scan base-package="text.service"></context:component-scan>
+<!--     <context:component-scan base-package="test.service"></context:component-scan> -->
     
     <!--  国际化配置 -->  
 	<bean id="messageSource"  
@@ -96,25 +103,5 @@
 		</property> 
 	</bean> 
     
-	<!-- 需要由spring注入的bean定义 -->
-
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"/>
-    
-    
-    <bean id="commonDao" class="com.xticfc.dao.CommonDao"/>
-    <bean id="userDao" class="com.xticfc.dao.UserDao"/>
-    <bean id="orgDao" class="com.xticfc.dao.OrgDao"/>
-    <bean id="funcDao" class="com.xticfc.dao.FuncDao"/>
-    <bean id="dinnerDao" class="com.xticfc.dao.DinnerDao"/>
-    <bean id="treeDao" class="com.xticfc.dao.TreeDao"/>
-    
-    
-    <bean id="sysService" class="com.xticfc.service.SysService"/>
-    <bean id="uploadService" class="com.xticfc.service.UploadService"/>
-    <bean id="orgService" class="com.xticfc.service.OrgService"/>
-    <bean id="funcService" class="com.xticfc.service.FuncService"/>
-    <bean id="mailService" class="com.xticfc.service.MailService"/>
-    <bean id="dinnerService" class="com.xticfc.service.DinnerService"/>
-    <bean id="treeService" class="com.xticfc.service.TreeService"/>
     
 </beans>

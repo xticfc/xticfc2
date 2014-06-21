@@ -29,7 +29,7 @@
         <property name="interceptors">
             <list>
             	<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />  
-                <bean class="com.xticfc.core.MyPermissionsInteceptor"/>
+                <bean class="com.xticfc.inteceptor.PermissionsInteceptor"/>
             </list>
         </property>
 	</bean>
@@ -101,20 +101,5 @@
 		<property name="cookieMaxAge" value="94608000"/>
 	</bean>  
 	
-	<!-- 测试返回json串 -->
-	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" >  
-	    <property name="messageConverters">  
-	        <list >  
-	            <ref bean="mappingJacksonHttpMessageConverter"/>  
-	        </list>  
-	    </property>  
-	</bean>  
-	<bean id="mappingJacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">  
-	    <property name="supportedMediaTypes">  
-	        <list>  
-	            <value>json/html;charset=UTF-8</value>  
-	        </list>  
-	    </property>  
-	</bean>  
 </beans>
 
