@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.xticfc.dao.UserDao;
 
-public class UploadService {
+public class UploadService extends BaseService{
 	
 	UserDao userDao;
 	OrgService orgService;

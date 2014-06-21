@@ -13,20 +13,33 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.xticfc.entity.FuncSub;
 import com.xticfc.entity.User;
 import com.xticfc.service.FuncService;
-import com.xticfc.service.SysService;
 
 @Controller
 @RequestMapping(value = "/main")
 public class MainController {
 
-	SysService sysService;
 	FuncService funcService;
 
-	@RequestMapping(value = "/mainPage")//bug,如果在这里写成"/main"的话，请求中写/main/main会报404.
-	public String gotoMainPage(HttpServletRequest request,
+	@RequestMapping(value = "/index")
+	public String index(HttpServletRequest request,
 		HttpServletResponse response) throws Exception {
-		
+		User user = (User)request.getSession().getAttribute("user");
+		if(null != user){
+			List<Map<String,Object>> result = funcService.getFuncs(user);
+			request.setAttribute("funcs", result);
+		}
 		return "/views/main/index";
+		
+	}
+	@RequestMapping(value = "/newIndex")
+	public String newIndex(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		User user = (User)request.getSession().getAttribute("user");
+		if(null != user){
+			List<Map<String,Object>> result = funcService.getFuncs(user);
+			request.setAttribute("funcs", result);
+		}
+		return "/views/main/newIndex";
 		
 	}
 	
@@ -95,13 +108,6 @@ public class MainController {
 		return "/views/system/welcome";
 	}
 
-	public SysService getSysService() {
-		return sysService;
-	}
-
-	public void setSysService(SysService sysService) {
-		this.sysService = sysService;
-	}
 
 
 	public FuncService getFuncService() {

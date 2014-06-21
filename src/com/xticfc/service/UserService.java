@@ -2,25 +2,18 @@ package com.xticfc.service;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
-import com.xticfc.dao.CommonDao;
 import com.xticfc.dao.UserDao;
+import com.xticfc.dto.UserDto;
 import com.xticfc.entity.User;
+import com.xticfc.util.StringUtil;
 
-public class UserService {
-	CommonDao commonDao;
+public class UserService extends BaseService{
 	UserDao userDao;
 	
 	
-	public void update(User user){
-		userDao.update(user);
-	}
-	
-	public Serializable save(User user){
-		return userDao.save(user);
-	}
-	
-	public User get(String id){
+	public User get(Serializable id){
 		return (User)userDao.get(User.class, id);
 	}
 	
@@ -29,8 +22,15 @@ public class UserService {
 	}
 	
 	
-	public int countAirCount(String name, String status){
-		return userDao.count(name,status);
+	@SuppressWarnings("unchecked")
+	public List<UserDto> list(int start, int size, String order){
+		List<Map<String, Object>> list = userDao.getUser(null, new Object[]{}, start, size, order);
+		List<UserDto> result = (List<UserDto>)StringUtil.mapToList(UserDto.class, list);
+		return result;
+	}
+	
+	public int count(){
+		return userDao.count(User.class);
 	}
 	
 	public List<User> list(String name, String status, int start, int size, String order){
@@ -38,12 +38,12 @@ public class UserService {
 		return userList;
 	}
 	
-	public CommonDao getCommonDao() {
-		return commonDao;
+	
+	public int countAirCount(String name, String status){
+		return userDao.count(name,status);
 	}
-	public void setCommonDao(CommonDao commonDao) {
-		this.commonDao = commonDao;
-	}
+	
+	
 	public UserDao getUserDao() {
 		return userDao;
 	}

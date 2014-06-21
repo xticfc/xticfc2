@@ -1,6 +1,5 @@
 package com.xticfc.controller;
 
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,17 +7,15 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JsonConfig;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.xticfc.entity.Dinner;
-import com.xticfc.service.DinnerService;
+import com.xticfc.dto.UserDto;
+import com.xticfc.entity.User;
+import com.xticfc.service.UserService;
 import com.xticfc.util.StringUtil;
 
   
@@ -26,7 +23,7 @@ import com.xticfc.util.StringUtil;
 @RequestMapping(value="/jqGrid")
 public class JqGridController {  
 	
-	DinnerService dinnerService;
+	UserService userService;
 	
 	@RequestMapping(value="/index")
 	public String index(HttpServletRequest request,
@@ -36,16 +33,13 @@ public class JqGridController {
 	@RequestMapping(value="/list")
 	public String list(HttpServletRequest request,
 			HttpServletResponse response) throws Exception{
-		Enumeration<String> e = request.getParameterNames();
-		Map<String,String[]> map1 = request.getParameterMap();
 		int start = ServletRequestUtils.getIntParameter(request, "page", 1)-1;//当前页数，第1页会传1
-		String nd = request.getParameter("nd");		//请求的时间
-		String _search = request.getParameter("_search");		//搜索
+//		String nd = request.getParameter("nd");		//请求的时间
+//		String _search = request.getParameter("_search");		//搜索
 		int size = ServletRequestUtils.getIntParameter(request, "rows",0);//页面上要显示多少条记录
 		String order = StringUtil.getOrderString(request);
-		System.out.println(System.currentTimeMillis());
-		List<Dinner> list = dinnerService.list(start, size, order);
-		int count = dinnerService.count();
+		List<UserDto> list = userService.list(start, size, order);
+		int count = userService.count(User.class);
 		Map<String,Object> map = new HashMap<String, Object>();
 		map.put("page", start+1);
 		map.put("total", StringUtil.getPageNum(count, size));
@@ -55,11 +49,13 @@ public class JqGridController {
 		StringUtil.writeToWeb(gson.toJson(map), "json", response);
 		return null;
 	}
-	public DinnerService getDinnerService() {
-		return dinnerService;
+	
+	
+	public UserService getUserService() {
+		return userService;
 	}
-	public void setDinnerService(DinnerService dinnerService) {
-		this.dinnerService = dinnerService;
+	public void setUserService(UserService userService) {
+		this.userService = userService;
 	}
 	
 

@@ -10,7 +10,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
-public class MailService {
+public class MailService extends BaseService{
 	private JavaMailSender sender;
 	public void testSendMail() throws MessagingException{
 		MimeMessage mm = sender.createMimeMessage();

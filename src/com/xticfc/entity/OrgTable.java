@@ -4,11 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Transient;
-
-import org.hibernate.annotations.GenericGenerator;
 
 /**
  * 行政机构表

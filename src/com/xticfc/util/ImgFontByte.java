@@ -4,7 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.awt.*;  
 /** 
  * ttf字体文件 
- * @author  
+ * @author  xticfc
  * 
  */  
 public class ImgFontByte {  

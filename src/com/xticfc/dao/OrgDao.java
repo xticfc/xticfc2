@@ -4,23 +4,17 @@ package com.xticfc.dao;
 
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import com.xticfc.entity.OrgReport;
-import com.xticfc.entity.OrgSysTable;
 import com.xticfc.entity.OrgTable;
 
 
-public class OrgDao extends CommonDao{
+public class OrgDao extends BaseDao{
 
 	
-	@SuppressWarnings("unchecked")
-	public List<OrgTable> getZdmc(String tbdwid) {
-		String sql = "from OrgTable where id = '"+tbdwid+"'";
-		
-		return super.list(sql, new Object[]{});
-	}
 	/**
 	 * 查询所有站点
 	 * @param sxid
@@ -30,7 +24,6 @@ public class OrgDao extends CommonDao{
 	 * @param order
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	public List<Map<String,Object>> getOrgTable(String orgId, String status, int start, int size, String order){
 		String sql = "select * from orgtable where 1=1 ";
 		List<String> param = new ArrayList<String>();
@@ -45,15 +38,35 @@ public class OrgDao extends CommonDao{
 		}
 		return super.listByNative(sql, param.toArray(), start, size, order);
 	}
+	
+	public List<OrgTable> list(Integer status, int start, int size, String order){
+		String condition = "";
+		List<Object> param = new ArrayList<Object>();
+		if(null != status){
+			condition += "status = ?";
+			param.add(status);
+		}
+		return list(OrgTable.class, condition, param.toArray(), start, size, order);
+	}
+	
+	public int count(Integer status){
+		String sql = "select count(*) from orgtable where 1=1";
+		List<Object> param = new ArrayList<Object>();
+		if(null != status){
+			sql += " and status=?";
+			param.add(status);
+		}
+		return jdbcTemplate.queryForObject(sql, param.toArray(), Integer.class);
+	}
+	
 	/**
 	 * 查站点个数
 	 * @param sxid
 	 * @param status
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	public int count(String orgId,String status){
-		String sql = "select count(id) from orgtable where 1=1 ";
+		String sql = "select count(*) from orgtable where 1=1 ";
 		List<String> param = new ArrayList<String>();
 		if(null != orgId && orgId.length() > 0){
 			sql += "and id in (select id from orgtable t start with t.id=? ";
@@ -64,7 +77,7 @@ public class OrgDao extends CommonDao{
 			sql += " and status = ?";
 			param.add(status);
 		}
-		return jdbcTemplate.queryForInt(sql, param.toArray());
+		return jdbcTemplate.queryForObject(sql, param.toArray(), Integer.class);
 	}
 	
 	/**
@@ -84,13 +97,12 @@ public class OrgDao extends CommonDao{
 	 * @param id
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	public List<Map<String,Object>> getOrgByFunc(String id){
 		if(null == id || id.length() == 0){
 			return null;
 		}
-		String sql = " select id,name,shortName,longName,parent,type,zwid ,status from orgtable t start with t.id=? connect by prior t.id=t.parent";
-		return jdbcTemplate.queryForList(sql, new Object[]{id});
+		String sql = " select id,name,shortName,longName,parent,type,zwid ,status from orgtable t ";
+		return jdbcTemplate.queryForList(sql, new Object[]{});
 	}
 	
 	/**
@@ -120,7 +132,7 @@ public class OrgDao extends CommonDao{
 	 * @return
 	 */
 	public int countChildren(String id){
-		String hql = "select count(id) from OrgTable where parent=?";
+		String hql = "select count(*) from OrgTable where parent=?";
 		return super.count(hql, new Object[]{id});
 	}
 
@@ -151,88 +163,21 @@ public class OrgDao extends CommonDao{
 		return orgReport;
 	}
 	
-	/**
-	 * 删除系统与站点表的关系
-	 * @param orgid
-	 * @param systableid
-	 */
-	public void deleteOrgSysTBRelation(String orgid, String systableid){
-		String sql = "delete from org_systable where orgid=? and systableid=?";
-		jdbcTemplate.update(sql, new Object[]{orgid, systableid});
-	}
 	
-	/**
-	 * 通过站点主键和系统主键查出关联关系
-	 * @param orgId
-	 * @param systableId
-	 * @return
-	 */
-	@SuppressWarnings("unchecked")
-	public OrgSysTable getOrgSysTable(String orgId, String systableId){
-		OrgSysTable orgSysTable = null;
-		String hql = " from OrgSysTable where orgid=? and systableid=?";
-		List<OrgSysTable> list = super.list(hql, new Object[]{orgId, systableId});
-		if(null != list && list.size() > 0){
-			orgSysTable = list.get(0);
+	public int updateOrgTable(String parentId, int left){
+		int right = left + 1;
+		String sql = "select id from orgtable where parent = '" + parentId + "'";
+		List<Map<String,Object>> list = jdbcTemplate.queryForList(sql);
+		Iterator<Map<String,Object>> iter = list.iterator();
+		while(iter.hasNext()){
+			right = updateOrgTable(iter.next().get("id").toString(), right);
 		}
-		return orgSysTable;
-	}
-
-	/**
-	 * 查表与站点表的关系
-	 * @param orgid
-	 * @param tableInfoCode
-	 */
-	public int findOrgReportRelation(String orgid, String tableInfoCode){
-		String sql = "select count(*) from org_report where orgid=? and tableid=?";
-		return jdbcTemplate.queryForInt(sql, new Object[]{orgid, tableInfoCode});
-	}
-	
-	/**
-	 * 查系统与站点表的关系
-	 * @param orgid
-	 * @param tableInfoCode
-	 */
-	public int findOrgSysTBRelation(String orgid, String systableid){
-		String sql = "select count(*) from org_systable where orgid=? and systableid=?";
-		return jdbcTemplate.queryForInt(sql, new Object[]{orgid, systableid});
-	}
-	@SuppressWarnings("unchecked")
-	public List<OrgTable> getsiteRelationList(String sxid,
-			int start, int size, String order) {
-		String cond = "1=1";
-		List<Object> param = new ArrayList<Object>();
-		if(sxid != null && sxid.length() > 0){
-			cond += " and id =? ";
-			param.add(sxid);
-		}
-		return super.list(OrgTable.class,cond, param.toArray(), start, size, order);
-	}
-	public int countsiteRelationList(String sxid) {
-		String hql = " select count(*) from OrgTable where 1=1 ";
-		List<Object> param = new ArrayList<Object>();
-		if(sxid != null && sxid.length() > 0){
-			hql += " and id =?";
-			param.add(sxid);
-		}
-		return super.count(hql, param.toArray());
-	}
-	public void delete(String sxid, String inputvalue,String systemid) {
-		String hql = " delete   from TransCityCode where selfCode=? and systemId=? ";
-		List<Object> param = new ArrayList<Object>();
-		param.add(sxid);
-		param.add(systemid);
-		super.delete(hql, param.toArray());
-	}
-	
-	
-	public void updateS(String sxid, String inputvalue,String systemid) {
-		String hql = " update    trans_city_code1 set othercode=?  where   selfcode=? and systemid=?  ";
-		List<Object> param = new ArrayList<Object>();
-		param.add(inputvalue);
-		param.add(sxid);
-		param.add(systemid);
-		jdbcTemplate.update(hql, param.toArray());
+		String updateSql = "update orgtable set lft=" + left +", rgt=" + right + " where id = '" + parentId + "'";
+		jdbcTemplate.execute(updateSql);
+		
+		System.out.println(sql);
+		System.out.println(updateSql);
+		return right + 1;
 	}
 	
 	

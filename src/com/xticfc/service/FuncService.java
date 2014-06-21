@@ -11,7 +11,7 @@ import com.xticfc.dao.FuncDao;
 import com.xticfc.entity.FuncSub;
 import com.xticfc.entity.User;
 
-public class FuncService {
+public class FuncService extends BaseService{
 	
 	FuncDao funcDao;
 

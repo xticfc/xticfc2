@@ -1,18 +1,6 @@
 package com.xticfc.dao;
 
-import java.util.List;
 
-
-
-
-
-public class DinnerDao extends CommonDao{
+public class DinnerDao extends BaseDao{
 	
-	@SuppressWarnings("unchecked")
-	public List list(String sql, Object... param){
-		return super.list(sql, param);
-	}
-	public void deleteAll(String sql, Object[] params){
-		execteNativeBulk(sql, params);
-	}
 }

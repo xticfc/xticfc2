@@ -7,6 +7,10 @@ import java.util.Date;
 
 public class DateUtil {
 
+	public static final String FORMATER_YYYY_MM_DD = "yyyy-MM-dd";
+	public static final String FORMATER_YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
+	
+	
 	/**
 	 * 返回java.sql.Date类型的当前时间
 	 * @return
@@ -30,13 +34,13 @@ public class DateUtil {
 	 * @return
 	 */
 	public static String formatFromDate(Date date){
-		return formatFromDate("yyyy-MM-dd", date);
+		return formatFromDate(FORMATER_YYYY_MM_DD, date);
 	}
 	
 	
 	/**
 	 * 按照给定的格式，格式化日期
-	 * @param formater	需要的格式，常用的例如"yy-MM-dd HH:mm:ss"
+	 * @param formater	需要的格式，常用的例如"yyyy-MM-dd HH:mm:ss"
 	 * @param date  日期
 	 * @return
 	 */
@@ -48,7 +52,7 @@ public class DateUtil {
 	
 	/**
 	 * 按照给定的格式，格式化日期
-	 * @param formater	需要的格式，常用的例如"yy-MM-dd HH:mm:ss"
+	 * @param formater	需要的格式，常用的例如"yyyy-MM-dd HH:mm:ss"
 	 * @param s  可格式化为日期的字符串
 	 * @return
 	 */

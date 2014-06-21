@@ -8,7 +8,7 @@ import com.xticfc.util.Constants;
 
 
 
-public class FuncDao extends CommonDao{
+public class FuncDao extends BaseDao{
 	
 	
 	/**
@@ -16,7 +16,6 @@ public class FuncDao extends CommonDao{
 	 * @param userId
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	public List<Map<String,Object>> getFuncMain(String userId){
 		if(null == userId || userId.length() == 0){
 			return null;
@@ -33,14 +32,13 @@ public class FuncDao extends CommonDao{
 	 * @param userId
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	public List<Map<String,Object>> getFuncSub(String mainId, String userId){
 		if(null == userId || userId.length() ==0 || null == mainId || mainId.length() == 0){
 			return null;
 		}
 		String sql = "select * from func_sub where status=?" +
 				" and funcmainid=? and funcid in " +
-				"(select funcid from funcuser where userid=?)";
+				"(select funcid from funcuser where userid=?) order by ordercode";
 		return super.jdbcTemplate.queryForList(sql, new Object[]{Constants.STATUS_YES, mainId, userId});
 	}
 }

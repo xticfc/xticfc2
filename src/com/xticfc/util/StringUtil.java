@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -19,8 +20,8 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JsonConfig;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.ServletRequestUtils;
 
@@ -28,12 +29,13 @@ import org.springframework.web.bind.ServletRequestUtils;
 
 public class StringUtil extends StringUtils {
 
+	static Log log = LogFactory.getLog(StringUtil.class);
+	
 	public static void main(String[] args) {
 //		String s = getMD5("111111".getBytes());
 //		System.out.println(s);
-		Date d = new Date();
-		System.out.println(d.toString());
-		
+//		Date d = new Date();
+//		System.out.println(d.toString());
 	}
 	
 	/**
@@ -141,58 +143,9 @@ public class StringUtil extends StringUtils {
 		response.getWriter().close();
 	}
 
-	/**
-	 * 本方法是为了格式化各种类型转JSON时的格式</br>
-	 * 本方法目前规定了日期的转换格式</br>
-	 * 说明：对于类型已经确定了的注册方法是可以正常执行的，但是对于不能确定的请写到自己的代码中去</br>
-	 * 比如registerJsonPropertyNameProcessor(Object.class, 。。。。)，Object在此无效，请在</br>
-	 * 自己的代码中将具体的类写进去。</br>
-	 * 有不清楚的请看本方法的实现代码。</br>
-	 * 之所以转换日期能成功就是因为Date是确定的。</br>
-	 * @return
-	 */
-	public static JsonConfig getJsonConfig(){
-		JsonConfig jsonConfig = new JsonConfig();
-		//处理实体类的转换格式
-//		jsonConfig.registerJsonBeanProcessor(Object.class, new JsonBeanProcessorImpl());
-		
-//		jsonConfig.registerJavaPropertyNameProcessor(Object.class, new PropertyNameProcessorImpl());//本方法new的不正确，请用到的时候新写处理类
-//		jsonConfig.registerJsonPropertyNameProcessor(Object.class, new PropertyNameProcessorImpl());
-		//处理日期的转换格式
-//		jsonConfig.registerJsonValueProcessor(Date.class, new JsonValueProcessorImpl());
-		return jsonConfig;
-	}
 	
 	
-	/**
-	 * 本方法是为了格式化各种类型转JSON时的格式</br>
-	 * 本方法目前规定了日期的转换格式,接收日期格式参数</br>
-	 * @param dateFormat	日期格式
-	 * @return
-	 */
-	public static JsonConfig getJsonConfig(String dateFormat){
-		JsonConfig jsonConfig = new JsonConfig();
-		//处理日期的转换格式
-//		jsonConfig.registerJsonValueProcessor(Date.class, new JsonValueProcessorImpl(dateFormat));
-		return jsonConfig;
-	}
 	
-	
-	/**
-	 * 校验字符串格式是否可以转换成json
-	 * @param s
-	 * @return
-	 */
-	public static boolean verifyJsonFormat(String s){
-		if(null == s || s.length() < 3){
-			return false;
-		}
-		if(s.startsWith("[") && s.endsWith("]")){
-			return true;
-		}else {
-			return false;
-		}
-	}
 	
 	/**
 	 * 如果传过来个空，则返回""</br>
@@ -228,6 +181,14 @@ public class StringUtil extends StringUtils {
 		}
 	}
 	
+	public static boolean isInteger(String s){
+		if(null == s || s.length() == 0){
+			return false;
+		}
+		Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
+		return pattern.matcher(s).matches();
+	}
+	
 	/**
 	 * 删除掉JSON串前后的[]，某些插件不能解析带[]的json格式
 	 * @param json
@@ -252,15 +213,18 @@ public class StringUtil extends StringUtils {
 	}
 	
 	/**
-	 * 获取通过ligerUI传过来的排序参数
+	 * 获取通过jqGrid传过来的排序参数
 	 * @param request
 	 * @return
 	 */
 	public static String getOrderString(HttpServletRequest request){
 		String orderString = "";
-		
-		String sortName = ServletRequestUtils.getStringParameter(request, "sortname", "");
-		String sortOrder = ServletRequestUtils.getStringParameter(request, "sortorder", "");
+		Enumeration<String> e = request.getParameterNames();
+		while(e.hasMoreElements()){
+			System.out.println(e.nextElement());
+		}
+		String sortName = ServletRequestUtils.getStringParameter(request, "sidx", "");
+		String sortOrder = ServletRequestUtils.getStringParameter(request, "sord", "");
 		if(sortName.length() > 0){
 			orderString = sortName;
 			if(sortOrder.length() > 0){
@@ -289,13 +253,12 @@ public class StringUtil extends StringUtils {
 	 * @param list		包含信息的列表
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
-	public static List mapToList(Class clazz, List<Map<String,Object>> list){
+	public static List<?> mapToList(Class<?> clazz, List<Map<String,Object>> list){
 		
 		if(null == list || list.size() == 0){
 			return null;
 		}
-		List result = new ArrayList();
+		List<Object> result = new ArrayList<Object>();
 		Map<String,Object> map;
 		for(Iterator<Map<String,Object>> iter = list.iterator(); iter.hasNext();){
 			map = iter.next();
@@ -310,8 +273,7 @@ public class StringUtil extends StringUtils {
 	 * @param map		包含信息的Map对象
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
-	public static Object mapToObject(Class clazz, Map<String,Object> map){
+	public static Object mapToObject(Class<?> clazz, Map<String,Object> map){
 		
 		if(null == map){
 			return null;
@@ -336,45 +298,46 @@ public class StringUtil extends StringUtils {
 			String setName="set"+stringLetter+fieldName.substring(1);    
 			//真正取得get方法。
 			Method setMethod = null;
-			Class fieldClass = field.getType();
+			Class<?> fieldClass = field.getType();
 			try {
 				if(isHaveSuchMethod(clazz, setName)){
+					Object value = map.get(fieldName);
 					if(fieldClass == String.class){
 						setMethod = clazz.getMethod(setName, fieldClass);
-						setMethod.invoke(o, String.valueOf(map.get(fieldName)));//为其赋值 
+						setMethod.invoke(o, value == null ? null : String.valueOf(value));//为其赋值 
 					}else if(fieldClass == Integer.class || fieldClass == int.class){
 						setMethod = clazz.getMethod(setName, fieldClass);
-						setMethod.invoke(o, Integer.parseInt(String.valueOf(map.get(fieldName))));//为其赋值 
+						setMethod.invoke(o, value == null ? null : Integer.parseInt(String.valueOf(value)));//为其赋值 
 					}else if(fieldClass == Boolean.class || fieldClass == boolean.class){
 						setMethod = clazz.getMethod(setName, fieldClass);
-						setMethod.invoke(o, Boolean.getBoolean(String.valueOf(map.get(fieldName))));//为其赋值 
+						setMethod.invoke(o, value == null ? null : Boolean.getBoolean(String.valueOf(value)));//为其赋值 
 					}else if(fieldClass == Short.class || fieldClass == short.class){
 						setMethod = clazz.getMethod(setName, fieldClass);
-						setMethod.invoke(o, Short.parseShort(String.valueOf(map.get(fieldName))));//为其赋值 
+						setMethod.invoke(o, value == null ? null : Short.parseShort(String.valueOf(value)));//为其赋值 
 					}else if(fieldClass == Long.class || fieldClass == long.class){
 						setMethod = clazz.getMethod(setName, fieldClass);
-						setMethod.invoke(o, Long.parseLong(String.valueOf(map.get(fieldName))));//为其赋值 
+						setMethod.invoke(o, value == null ? null : Long.parseLong(String.valueOf(value)));//为其赋值 
 					}else if(fieldClass == Double.class || fieldClass == double.class){
 						setMethod = clazz.getMethod(setName, fieldClass);
-						setMethod.invoke(o, Double.parseDouble(String.valueOf(map.get(fieldName))));//为其赋值 
+						setMethod.invoke(o, value == null ? null : Double.parseDouble(String.valueOf(value)));//为其赋值 
 					}else if(fieldClass == Float.class || fieldClass == float.class){
 						setMethod = clazz.getMethod(setName, fieldClass);
-						setMethod.invoke(o, Float.parseFloat(String.valueOf(map.get(fieldName))));//为其赋值 
+						setMethod.invoke(o, value == null ? null : Float.parseFloat(String.valueOf(value)));//为其赋值 
 					}else if(fieldClass == BigInteger.class ){
 						setMethod = clazz.getMethod(setName, fieldClass);
-						setMethod.invoke(o, BigInteger.valueOf(Long.parseLong(String.valueOf(map.get(fieldName)))));//为其赋值 
+						setMethod.invoke(o, value == null ? null : BigInteger.valueOf(Long.parseLong(String.valueOf(value))));//为其赋值 
 					}else if(fieldClass == BigDecimal.class){
 						setMethod = clazz.getMethod(setName, fieldClass);
-						setMethod.invoke(o, BigDecimal.valueOf(Long.parseLong(String.valueOf(map.get(fieldName)))));//为其赋值 
+						setMethod.invoke(o, value == null ? null : BigDecimal.valueOf(Double.parseDouble(String.valueOf(value))));//为其赋值 
 					}else if(fieldClass == Date.class){
 						setMethod = clazz.getMethod(setName, fieldClass);
-						if(map.get(fieldName) != null){
+						if(value != null){
 							if(map.get(fieldName).getClass() == java.sql.Date.class){
-								setMethod.invoke(o, new Date(((java.sql.Date)map.get(fieldName)).getTime()));//为其赋值 
+								setMethod.invoke(o, new Date(((java.sql.Date)value).getTime()));//为其赋值 
 							}else if(map.get(fieldName).getClass() == java.sql.Time.class){
-								setMethod.invoke(o, new Date(((java.sql.Time)map.get(fieldName)).getTime()));//为其赋值 
+								setMethod.invoke(o, new Date(((java.sql.Time)value).getTime()));//为其赋值 
 							}else if(map.get(fieldName).getClass() == java.sql.Timestamp.class){
-								setMethod.invoke(o, new Date(((java.sql.Timestamp)map.get(fieldName)).getTime()));//为其赋值 
+								setMethod.invoke(o, new Date(((java.sql.Timestamp)value).getTime()));//为其赋值 
 							}
 						}
 					}
@@ -401,8 +364,7 @@ public class StringUtil extends StringUtils {
 	 * @param methodName
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
-	public static boolean isHaveSuchMethod(Class clazz, String methodName){
+	public static boolean isHaveSuchMethod(Class<?> clazz, String methodName){
 		Method[] methodArray = clazz.getMethods();
 		boolean result = false;
 		if(null != methodArray){
@@ -414,5 +376,64 @@ public class StringUtil extends StringUtils {
 			}
 		}
 		return result;
+	}
+	
+	public static void beanCopy(Object source, Object target) {
+
+		if (null == source || null == target) {
+			if (log.isWarnEnabled()) {
+				log.warn("对象复制警告，不允许对象为null！");
+			}
+			return;
+		}
+
+
+		Class<?> sourceClazz = source.getClass();
+		Class<?> targetClazz = target.getClass();
+		Field[] fields = targetClazz.getDeclaredFields(); // 取到所有类下的属性，也就是变量名
+		Field field;
+
+		for (int i = 0; i < fields.length; i++) {
+			field = fields[i];
+			String fieldName = field.getName();
+			// 把属性的第一个字母处理成大写
+			String stringLetter = fieldName.substring(0, 1).toUpperCase();
+			// 取得setter方法名，比如setBbzt
+			String setName = "set" + stringLetter + fieldName.substring(1);
+			// 取得getter方法名
+			String getName = "get" + stringLetter + fieldName.substring(1);
+			// 真正取得get方法。
+			Method setMethod = null;
+			// 真正取得set方法
+			Method sourceGetMethod = null;
+			Method targetGetMethod = null;
+
+			Class<?> fieldClass = field.getType();
+			try {
+				if (isHaveSuchMethod(sourceClazz, setName)) {
+					setMethod = targetClazz.getMethod(setName, fieldClass);
+					if (isHaveSuchMethod(sourceClazz, getName)) {
+						sourceGetMethod = sourceClazz.getMethod(getName);
+						targetGetMethod = targetClazz.getMethod(getName);
+					}
+					Object targetValue = targetGetMethod.invoke(target);
+					if (null == targetValue) {
+						setMethod.invoke(target, sourceGetMethod.invoke(source));// 为其赋值
+					}
+				}
+			} catch (SecurityException e) {
+				e.printStackTrace();
+			} catch (NoSuchMethodException e) {
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+			}
+
+		}
+		return ;
 	}
 }

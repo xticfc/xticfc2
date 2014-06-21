@@ -13,7 +13,6 @@ public class TaskListener implements ServletContextListener {
 	private Scheduler scheduler;;
 	@Override
 	public void contextDestroyed(ServletContextEvent event) {
-		// TODO Auto-generated method stub
 		this.context = null;
 	}
 

@@ -2,22 +2,17 @@ package com.xticfc.service;
 
 
 import java.util.List;
-import java.util.Map;
 
 import com.xticfc.dao.DinnerDao;
 import com.xticfc.entity.Dinner;
 
 
 
-public class DinnerService {
+public class DinnerService extends BaseService{
 
 	DinnerDao dinnerDao;
 	
-	public List<Map<String,Object>> queryForList(String sql, Object... param){
-		return dinnerDao.getJdbcTemplate().queryForList(sql, param);
-	}
 	
-	@SuppressWarnings("unchecked")
 	public List<Dinner> list(int start, int size, String order){
 		return dinnerDao.list(Dinner.class, start, size, order);
 	}

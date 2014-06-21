@@ -2,18 +2,13 @@ package com.xticfc.service;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-
-import net.sf.json.JSONArray;
-import net.sf.json.JsonConfig;
 
 import com.xticfc.dao.TreeDao;
 import com.xticfc.entity.OrgTable;
-import com.xticfc.util.StringUtil;
 
 
 
-public class TreeService {
+public class TreeService extends BaseService{
 
 	TreeDao treeDao;
 
@@ -35,8 +30,8 @@ public class TreeService {
 	}
 	
 	
-	public List<OrgTable> getAll(String id){
-		return getChildren(id);
+	public List<OrgTable> getAll(){
+		return treeDao.getAll();
 	}
 	
 	

@@ -10,7 +10,7 @@ import com.xticfc.entity.OrgTable;
 
 
 @SuppressWarnings("unchecked")
-public class TreeDao extends CommonDao{
+public class TreeDao extends BaseDao{
 	
 	public List<OrgTable> getChildren(String id){
 		String hql = "from OrgTable where parent = ?";
@@ -23,7 +23,11 @@ public class TreeDao extends CommonDao{
 	}
 	
 	public int countChildren(String id){
-		String hql = "select count(*) as c from OrgTable where parent=?";
+		String hql = "select count(*) from OrgTable where parent=?";
 		return super.count(hql, new Object[]{id});
+	}
+	
+	public List<OrgTable> getAll(){
+		return list(OrgTable.class);
 	}
 }

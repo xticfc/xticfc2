@@ -7,15 +7,14 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JsonConfig;
-
 import org.jboss.logging.Param;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.xticfc.entity.User;
 import com.xticfc.service.UserService;
 import com.xticfc.util.DateUtil;
@@ -47,9 +46,8 @@ public class UserController {
 		map.put("total", count);
 		map.put("result", list);
 		
-		JsonConfig jsonConfig = StringUtil.getJsonConfig();
-		JSONArray j = JSONArray.fromObject(map, jsonConfig);
-		String s = j.toString();
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+		String s = gson.toJson(map);
 		s = StringUtil.treatJson(s);
 		StringUtil.writeToWeb(s, "JSON", response);
 		return null;

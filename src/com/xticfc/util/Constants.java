@@ -37,36 +37,6 @@ public class Constants {
 	 */
 	public static final String DEFULT_NO_RESULT = "[]";
 	
-	/**
-	 * 无效的请求路径,就是说没有匹配到传来的action
-	 */
-	public static final String CAN_NOT_FOUND_PATH = "[{\"result\":false,\"cause\":\"2001\"}]";
-	
-	
-	/**
-	 * 报表状态 未上报
-	 */
-	public static final String BBZT_WSB = "0";
-	
-	/**
-	 * 报表状态 已上报
-	 */
-	public static final String BBZT_YSB = "1";
-	
-	/**
-	 * 报表状态 已填写未上报
-	 */
-	public static final String BBZT_YTXWSB = "2";
-	
-	/**
-	 * 报表状态 已退回
-	 */
-	public static final String BBZT_YTH = "3";
-	
-	/**
-	 * 报表状态 审核通过
-	 */
-	public static final String BBZT_SHTG = "4";
 	
 	/**
 	 * 是否有效 有效
@@ -79,24 +49,8 @@ public class Constants {
 	public static final String STATUS_NO = "0";
 	
 	
-	public static final String MOBILE_LOGIN = "4028805e34ccd2b10134c0c8b2a00dba";
-	
 	public static final String KAPTCHA_SESSION_KEY = "4028805e34ccd2b23134c0c8b2a00dba";
 	
-	/**
-	 * 客户端类型  移动端
-	 */
-	public static final String CLIENTTYPE_MOBILE = "mobile";
-	
-	/**
-	 * 客户端类型	 FLEX
-	 */
-	public static final String CLIENTTYPE_AIR = "air";
-	
-	/**
-	 * 客户端类型  网页
-	 */
-	public static final String CLIENTTYPE_WEB = "web";
 	
 	/**
 	 * 提取config.properties文件里的值，此文件应该是放在 项目名/config/下</br>
@@ -129,17 +83,22 @@ public class Constants {
 	
 	/**
 	 * 提取config.properties文件里的值，此文件应该是放在 项目名/config/下</br>
-	 * 将值转换成int型，如果不存在或不是数值弄，返回提供的默认值
+	 * 将值转换成int型，如果不存在或不是数值型，返回提供的默认值
 	 * @param key
 	 * @param defaultValue
 	 * @return
 	 */
 	public static int getIntValue(String key, int defaultValue){
 		String value = get(key);
-		if(StringUtil.isNAN(value)){
-			return defaultValue;
+		if(StringUtil.isInteger(value)){
+			try{
+				return Integer.parseInt(value);
+			}catch(Exception e){
+				e.printStackTrace();
+				return defaultValue;
+			}
 		}else{
-			return Integer.parseInt(value);
+			return defaultValue;
 		}
 	}
 }

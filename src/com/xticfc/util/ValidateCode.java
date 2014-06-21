@@ -27,7 +27,7 @@ public class ValidateCode {
     // 验证码  
     private String code = null;  
     // 验证码图片Buffer  
-    private BufferedImage buffImg=null;  
+    private BufferedImage bufferedImage=null;  
   
     private char[] codeSequence = Constants.get("validateCode.text.string", "").toCharArray();
   
@@ -72,8 +72,8 @@ public class ValidateCode {
         codeY = height - 4;  
           
         // 图像buffer  
-        buffImg = new BufferedImage(width, height,BufferedImage.TYPE_INT_RGB);  
-        Graphics2D g = buffImg.createGraphics();  
+        bufferedImage = new BufferedImage(width, height,BufferedImage.TYPE_INT_RGB);  
+        Graphics2D g = bufferedImage.createGraphics();  
         // 生成随机数  
         Random random = new Random();  
         // 将图像填充为白色  
@@ -119,11 +119,11 @@ public class ValidateCode {
     }  
       
     public void write(OutputStream outputStream) throws IOException {  
-        ImageIO.write(buffImg, "png", outputStream);  
+        ImageIO.write(bufferedImage, "png", outputStream);  
         outputStream.close();  
     }  
     public BufferedImage getBuffImg() {  
-        return buffImg;  
+        return bufferedImage;  
     }  
       
     public String getCode() {  

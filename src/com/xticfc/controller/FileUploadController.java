@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
@@ -24,6 +25,8 @@ import com.xticfc.util.StringUtil;
 public class FileUploadController{
 
 	UploadService uploadService;
+	
+	
 	@RequestMapping(value = "/index")
 	public String index(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -39,6 +42,8 @@ public class FileUploadController{
 		System.out.println(someOtherKey);
 		System.out.println("kkk is :" + kkk);
 		final String realPath = request.getSession().getServletContext().getRealPath("/");
+		boolean b = ServletFileUpload.isMultipartContent(request);
+		System.out.println(b);
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest )request;
 		List<MultipartFile> m = multipartRequest.getFiles("the_files");
 		if(null != m && m.size() > 0){
@@ -69,9 +74,6 @@ public class FileUploadController{
 	public void setUploadService(UploadService uploadService) {
 		this.uploadService = uploadService;
 	}
-
-
-
 
 
 }

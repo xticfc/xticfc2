@@ -6,7 +6,7 @@ import com.xticfc.entity.UserReport;
 
 
 
-public class UploadDao extends CommonDao{
+public class UploadDao extends BaseDao{
 	
 	@SuppressWarnings("unchecked")
 	public List<UserReport> list(String userId){

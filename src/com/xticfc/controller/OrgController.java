@@ -6,14 +6,13 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JsonConfig;
-
 import org.jboss.logging.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.xticfc.entity.OrgTable;
 import com.xticfc.entity.User;
 import com.xticfc.service.OrgService;
@@ -35,41 +34,6 @@ public class OrgController{
 	}
 	
 	
-	@RequestMapping(value = "/siteRelationList")
-	public String siteRelationList(HttpServletRequest request,
-			HttpServletResponse response) throws Exception{
-		int start = ServletRequestUtils.getIntParameter(request, "page", 1)-1;
-		int size = ServletRequestUtils.getIntParameter(request, "pagesize", 0);
-		String sxid = ServletRequestUtils.getStringParameter(request, "orgId", "");
-		String order = StringUtil.getOrderString(request);	//取得排序参数
-		
-		List<OrgTable> list = orgService.siteRelationList(sxid,start, size, order);
-		int count = orgService.countsiteRelationList(sxid);
-		
-		Map<String,Object> map = new HashMap<String, Object>();
-		map.put("total", count);
-		map.put("result", list);
-		
-		JsonConfig jsonConfig = StringUtil.getJsonConfig();
-		JSONArray j = JSONArray.fromObject(map, jsonConfig);
-		String s = j.toString();
-		s = StringUtil.treatJson(s);
-		StringUtil.writeToWeb(s, "JSON", response);
-		return null;
-	}
-	
-	
-	@RequestMapping(value = "/getZdmc")
-	public String getZdmc(HttpServletRequest request,
-			HttpServletResponse response) throws Exception{
-		String tbdwid = ServletRequestUtils.getStringParameter(request, "tbdwid", "");
-		String tbdwmc = orgService.getZdmc(tbdwid);
-		String result = "{\"name\":\""+tbdwmc+"\"}";
-		StringUtil.writeToWeb(result, "json", response);
-		return null;
-
-	}
-	
 	
 	
 	@RequestMapping(value = "/getOrgTreeByUserFunc")
@@ -79,9 +43,8 @@ public class OrgController{
 		if(user != null){
 			List<Map<String,Object>> orgTableList = orgService.getOrgTreeById(user.getSxId());
 			if(null != orgTableList && orgTableList.size() > 0){
-				JsonConfig jsonConfig = StringUtil.getJsonConfig();
-				JSONArray j = JSONArray.fromObject(orgTableList,jsonConfig);
-				result = j.toString();
+				Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+				result = gson.toJson(orgTableList);
 			}
 		}
 		StringUtil.writeToWeb(result, "json", response);
@@ -100,9 +63,8 @@ public class OrgController{
 		if(user != null){
 			List<Map<String,Object>> orgTableList = orgService.getSonOrgTreeById(id,true);
 			if(null != orgTableList && orgTableList.size() > 0){
-				JsonConfig jsonConfig = StringUtil.getJsonConfig();
-				JSONArray j = JSONArray.fromObject(orgTableList,jsonConfig);
-				result = j.toString();
+				Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+				result = gson.toJson(orgTableList);
 			}
 		}
 		StringUtil.writeToWeb(result, "json", response);
@@ -142,9 +104,8 @@ public class OrgController{
 		map.put("total", count);
 		map.put("result", list);
 		
-		JsonConfig jsonConfig = StringUtil.getJsonConfig();
-		JSONArray j = JSONArray.fromObject(map, jsonConfig);
-		String s = j.toString();
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+		String s = gson.toJson(map);
 		s = StringUtil.treatJson(s);
 		StringUtil.writeToWeb(s, "JSON", response);
 		return null;

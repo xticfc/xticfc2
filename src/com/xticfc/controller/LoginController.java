@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.xticfc.entity.User;
-import com.xticfc.service.SysService;
+import com.xticfc.service.LoginService;
 import com.xticfc.util.Constants;
 import com.xticfc.util.StringUtil;
 import com.xticfc.util.ValidateCode;
@@ -31,15 +31,8 @@ import com.xticfc.util.ValidateCode;
 @RequestMapping(value="/login")
 public class LoginController {
 
-	SysService sysService;
+	LoginService loginService;
 
-
-	
-	
-	
-	
-	
-	
 	@RequestMapping(value = "/webLogin", method=RequestMethod.POST)
 	public String webLogin(HttpServletRequest request,
 			HttpServletResponse response) throws Exception{
@@ -52,7 +45,7 @@ public class LoginController {
 			StringUtil.writeToWeb(result, "json", response);
 			return null;
 		}
-		User user = sysService.webLogin(username, password);
+		User user = loginService.webLogin(username, password);
 		if(null == user){
 			String result = "{\"success\":false,\"msg\":\"用户名或密码错误\"}";
 			StringUtil.writeToWeb(result, "json", response);
@@ -110,12 +103,11 @@ public class LoginController {
 	}
 	
 	
-	public SysService getSysService() {
-		return sysService;
+	public LoginService getLoginService() {
+		return loginService;
 	}
-	
-	public void setSysService(SysService sysService) {
-		this.sysService = sysService;
+	public void setLoginService(LoginService loginService) {
+		this.loginService = loginService;
 	}
 
 

@@ -6,15 +6,15 @@ package com.xticfc.dao;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.xticfc.entity.User;
 import com.xticfc.entity.UserReport;
 
-public class UserDao extends CommonDao{
+public class UserDao extends BaseDao{
 
 	User user;
 	
-	@SuppressWarnings("unchecked")
 	public List<User> getUser(String name, String status, int start, int size, String order){
 		String cond = "1=1";
 		List<Object> param = new ArrayList<Object>();
@@ -40,6 +40,11 @@ public class UserDao extends CommonDao{
 		return super.list(sql, new Object[]{loginId});
 	}
 	
+	public List<Map<String,Object>> getUser(String condition, Object[] param, int start, int size, String order){
+		String sql = "SELECT o.name as orgname, u.* FROM orgtable o, userinfo u WHERE u.SXID=o.ID";
+		return listByNative(sql, null, start, size, order);
+	}
+	
 	
 	@SuppressWarnings("unchecked")
 	public List<User> list(String username, String password){
@@ -47,6 +52,10 @@ public class UserDao extends CommonDao{
 		return super.list(sql, new Object[]{username, password});
 	}
 	
+	
+	public List<User> list (int start, int size, String order){
+		return list(User.class, start, size, order);
+	}
 	
 	
 	/**
@@ -79,7 +88,6 @@ public class UserDao extends CommonDao{
 	 * @param userId
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	public List<UserReport> getUserReport(String userId){
 		if(null == userId || userId.length() ==0){
 			return null;
