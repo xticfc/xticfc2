@@ -10,10 +10,6 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 			classpath:app-context.xml
-			classpath:app-context-1.xml
-			classpath:app-context-2.xml
-			classpath:app-db.xml
-			classpath:app-quartz.xml
 		</param-value>
 	</context-param>
 	<context-param>  
