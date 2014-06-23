@@ -9,7 +9,7 @@
 <link href="css/global.css" rel="stylesheet" type="text/css" />
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
-	top.document.location.href="${ctx}/main/mainPage?clientType=web";
+	top.document.location.href="${ctx}/main/index?clientType=web";
 </script>
 </head>
 

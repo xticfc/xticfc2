@@ -8,16 +8,36 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>   
 <title>xticfc</title>
 <script type="text/javascript">
+$(function(){
+	var res = null;
+	$.ajax({
+	  type: 'POST',
+	  url: "${ctx}/jqplot/data1",
+	  dataType:"json",
+	  async:false,
+	  timeout: 10000,
+	  error: function(){
+	  	alert('请求超时，请稍候再试');
+	  },
+	  success: function(result){
+		  res = result;
+	  }
+	});
+	var plot2 = $.jqplot('chart2', [res],{
+		title: "AJAX JSON Data Renderer"
+	}); 
+});
 </script>
 </head>
 
-<body style="background:#ffedc9;">
+<body>
 <div id="c_main">
 <!-- c_top start-->
 <table  width="100%" border="1">
 	<tr>
 		<td>
-			还没实现
+		<div id="chart2" style="height:300px; width:500px;"></div>
+		
 		</td>
 	</tr>
 	<tr>

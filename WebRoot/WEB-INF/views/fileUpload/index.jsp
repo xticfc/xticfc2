@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <%@ include file="/common/meta.jsp"%>
 <%@ include file="/common/uploadify.jsp"%>
-<title>xticfc</title>
+<title>xticfc2</title>
 
 <script type="text/javascript">
 	/**

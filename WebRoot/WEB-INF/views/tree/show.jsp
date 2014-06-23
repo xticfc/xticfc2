@@ -5,8 +5,6 @@
 <%@ include file="/common/meta.jsp"%>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>xticfc2</title>
-<link href="${ctx }/css/global.css" rel="stylesheet" type="text/css" />
-<link href="${ctx }/css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
 	var setting = {
 		async:{
@@ -23,7 +21,7 @@
 		async:{
 			enable:true,
 			autoParam:["id"],
-			url:"${ctx}/tree/getAll"
+			url:"${ctx}/tree/getChildren"
 		},
 		data:{
 			simpleData:{
@@ -50,7 +48,7 @@
 		async:{
 			enable:true,
 			autoParam:["id"],
-			url:"${ctx}/tree/getAll"
+			url:"${ctx}/tree/getAll?id=140000"
 		},
 		data:{
 			simpleData:{

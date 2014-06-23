@@ -17,20 +17,21 @@ body{height:100%;margin:0px;padding:0px}
 </head>
 
 <body style="background:#ffedc9;">
-			<div id="container"></div> 
+
 <script type="text/javascript"> 
 	var map = new BMap.Map("container");          // 创建地图实例  
 	var point = new BMap.Point(116.404, 39.915);  // 创建点坐标  
 	map.centerAndZoom(point, 15);                 // 初始化地图，设置中心点坐标和地图级别  
 </script> 
-<div id="c_main">
+
 <!-- c_top start-->
-<table  width="100%" border="1">
+<table  width="100%" height="100%" border="1">
 	<tr>
 		<td>
+			<div id="container" class="container"></div>
 		</td>
 	</tr>
 </table>
-</div>
+
 </body>
 </html>

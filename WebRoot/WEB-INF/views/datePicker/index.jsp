@@ -5,96 +5,94 @@
 <%@ include file="/common/meta.jsp"%>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>xticfc</title>
-<link href="${ctx }/css/global.css" rel="stylesheet" type="text/css" />
-<link href="${ctx }/css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
+
 	$(function() {
-		$( "#datepicker0" ).datepicker({
-			onSelect: function( selectedDate ) {
-				//alert(selectedDate);
+		WdatePicker({
+			eCont:'date6',
+			onpicked:function(dp){
+				alert('你选择的日期是:'+dp.cal.getDateStr());
 			}
 		});
-		$( "#datepicker1" ).datepicker({ 
-			minDate: -20, 
-			maxDate: "+1M +10D",
-			showOn: "button",
-			buttonImage: "${ctx }/images/ui/calendar.gif",
-			buttonImageOnly: true,
-			showButtonPanel: true
-		});
-		$( "#datepicker2" ).datepicker({
-			showButtonPanel: true,
-			onSelect: function(dateText, inst) {
-				alert(dateText);
-				alert(inst);
-			}
-		});
-		$( "#datepicker3" ).datepicker({
-			changeMonth: true,
-			changeYear: true,
-			showOtherMonths: true,
-			selectOtherMonths: false,
-			showWeek: true,
-			firstDay: 1,
-			showAnim:"slideDown"
-		});
-		var dates = $( "#from, #to" ).datepicker({
-			defaultDate: "+1w",
-			changeMonth: true,
-			numberOfMonths: 2,
-			onSelect: function( selectedDate ) {
-				var option = this.id == "from" ? "minDate" : "maxDate",
-					instance = $( this ).data( "datepicker" ),
-					date = $.datepicker.parseDate(
-						instance.settings.dateFormat ||
-						$.datepicker._defaults.dateFormat,
-						selectedDate, instance.settings );
-				dates.not( this ).datepicker( "option", option, date );
-			}
-		});
-		
-		$( "#datepicker0" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
 	});
-	
 </script>
 </head>
 
-<body style="background:#ffedc9;">
-<div id="c_main">
-<!-- c_top start-->
-<table width="500" align="center">
+<body>
+<table width="100%" align="center">
 	<tr>
 		<td>
 			welcome! 这是日期选择页面！
 		</td>
 	</tr>
 	<tr>
-		<td width="1000px">
-			<div style="width: 1000px;">
+		<td >
+			<div >
 				<div style="float: left;">
-					最普通<br/>
-					<input type="text" id="datepicker0" size="30"/>
-				</div>
-				<div style="float: left;">
-					设置可选择的范围<br />
-					<input type="text" id="datepicker1" size="30"/>
-				</div>
-				<div style="float: left;" id="datepicker2">
+					日历<input id="date1" type="text" onclick="WdatePicker()"/>
 				</div>
 				<div style="float: left;">
-					显示年月<br />
-					<input type="text" id="datepicker3" size="30"/>
+					databox
+					<input id="date2" type="text" readonly="readonly"/>
+					<img onclick="WdatePicker({el:'date2'})" src="${ctx }/js/my97DatePicker/skin/datePicker.gif" width="16" height="22" align="absmiddle"/>
 				</div>
 				<div style="float: left;">
-					<label for="from">从:</label>
-					<input type="text" id="from" name="from"/>
-					<label for="to">至:</label>
-					<input type="text" id="to" name="to"/>
+					显示周数
+					<input id="date3" type="text" onfocus="WdatePicker({isShowWeek:true})"/>
 				</div>
+				<div style="float: left;">
+					把周数赋给其它框
+					<input type="text" class="Wdate" id="date4" onfocus="WdatePicker({isShowWeek:true,onpicked:function() {$dp.$('date4_1').value=$dp.cal.getP('W','W');$dp.$('d122_2').value=$dp.cal.getP('W','WW');}})"/>
+					周数<input type="text" id="date4_1" style="width: 50px;"/>
+				</div>
+				<div style="float: left;">
+					周一做为第1天
+					<input class="Wdate" type="text" id="date5" onfocus="WdatePicker({firstDayOfWeek:1})"/>
+				</div>
+				<div style="float: left;">
+					平面显示
+					<div id="date6"></div>
+				</div>
+				<div style="float: left;">
+					默认的起始日期
+					<input type="text" id="date7" onfocus="WdatePicker({startDate:'1980-05-01'})"/>
+				</div>
+				<div style="float: left;">
+					年月日时分秒
+					<input type="text" id="date8" onfocus="WdatePicker({dateFmt:'yyyy年MM月dd日 HH时mm分ss秒'})" class="Wdate" style="width:300px"/>
+				</div>
+				<div style="float: left;">
+					时分秒
+					<input type="text" id="date9" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'H:mm:ss'})" class="Wdate"/>
+				</div>
+				<div style="float: left;">
+					年月
+					<input type="text" id="date10" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy年MM月'})" class="Wdate"/>
+				</div>
+				<div style="float: left;">
+					不同格式
+					<input id="date11" type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy年M月d日',vel:'date12'})"/>
+					<input id="date12" type="text" />
+				</div>
+				<div style="float: left;">
+					星期, 月 日, 年
+					<input type="text" id="date13" onfocus="WdatePicker({dateFmt:'DD, MMMM d, yyyy'})" class="Wdate"/>
+				</div>
+				<div style="float: left;">
+					双月日历
+					<input id="date14" class="Wdate" type="text" onfocus="WdatePicker({doubleCalendar:true,dateFmt:'yyyy-MM-dd'})"/>
+				</div>
+				<div style="float: left;">
+					不合法的日期演示(例如1997-02-29)
+					<input id="date15" type="text" onclick="WdatePicker({errDealMode:1})"/>
+				</div>
+				
 			</div>
 		</td>
 	</tr>
 </table>
-</div>
+				<div style="height: 700px;">
+					abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />abc<br />
+				</div>
 </body>
 </html>

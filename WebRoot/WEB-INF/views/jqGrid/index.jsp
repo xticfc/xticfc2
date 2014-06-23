@@ -13,17 +13,19 @@
 		   	url:'${ctx}/jqGrid/list',
 			datatype: "json",
 			mtype:"POST",
-		   	colNames:['显示名1','显示名2', 'type', 'money','status','tttt'],
+		   	colNames:['用户姓名', '所属站点', '用户等级', '用户类型','登录账号', '状态','操作'],
 		   	colModel:[
 		   		{name:'name',index:'name', width:55, sortable:true},
-		   		{name:'shopid',index:'shopid', width:90},
-		   		{name:'type',index:'type', width:100},
-		   		{name:'money',index:'money', width:80, align:"right"},
+		   		{name:'orgName',index:'orgName', width:55, sortable:true},
+		   		{name:'userLevel',index:'userLevel', width:50, sortable:true},
+		   		{name:'userType',index:'userType', width:50},
+		   		{name:'loginId',index:'loginId', width:80,align:"right"},
 		   		{name:'status',index:'status', width:80,align:"right"},
-		   		{name:'aaa',index:'', width:80, align:"right"}	
+		   		{name:'aaa',index:'', width:80, align:"middle"}	
 		   	],
 		   	width:1000,
-		   	height:500,
+		   	height:400,
+		   	altRows:true,
 		   	rowNum:20,
 		   	rownumbers:true,
 		   	rowList:[10,20,30,100],
@@ -44,19 +46,45 @@
 		var cell;
 	    var array=j.getDataIDs();
 	    for ( var i = 0; i < array.length; i++) {
-	        var rowarray=j.getRowData(array[i])
+	        var rowarray=j.getRowData(array[i]);
 	        for ( var rowname in rowarray) {
 	            if(rowname=='aaa'){
 	                cell=j.getCell(array[i],rowname);
 	                j.setCell(array[i],rowname,'<a href="aaa.html" target="_blank">' + rowarray['name'] + '</a>');
+	            }else if(rowname == 'userLevel'){
+	            	j.setCell(array[i], rowname, getUserLevel(rowarray['userLevel']));
+	            }else if(rowname == 'userType'){
+	            	j.setCell(array[i], rowname, getUserType(rowarray['userType']));
 	            }
 	        }
 	    }
 	}
+	
+	function getUserLevel(userLevel){
+		if(userLevel == 1){
+			return '省管理员';
+		}else if(userLevel == 2){
+			return '县管理员';
+		}else if(userLevel == 3){
+			return '超级管理员';
+		}else if(userLevel == 0){
+			return '市级管理员';
+		}
+	}
+	
+	function getUserType(userType){
+		if(userType == 0){
+			return '管理员';
+		}else if(userType == 1){
+			return '普通用户';
+		}else {
+			return '';
+		}
+	}
 </script>
 </head>
 
-<body style="background:#ffedc9;">
+<body>
 <div id="c_main">
 <!-- c_top start-->
 <table  width="100%" border="1">
