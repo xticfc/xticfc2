@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -9,9 +9,6 @@
 <link href="${ctx}/css/global.css" rel="stylesheet" type="text/css" />
 <link href="${ctx}/css/login.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
-	function doSubmit(){
-		
-	}
 	function changeCode() {  
 	    $('#kaptchaImage').hide().attr('src', '${ctx }/login/getKaptchaImage?clientType=web&a=' + Math.floor(Math.random()*100) ).fadeIn();  
 	}
@@ -41,16 +38,17 @@
 		  dataType:"json",
 		  timeout: 10000,
 		  error: function(){
-		  	alert('请求超时，请稍候再试');
+		  	alert('请求失败，请稍候再试');
 		  	changeCode();
+		  	$("#identificationCode").val('');
 		  },
 		  success: function(result){
 			  if(result.success){
-			  		top.document.location.href="${ctx}/main/mainPage?clientType=web";
+			  		top.document.location.href="${ctx}/main/index?clientType=web";
 			  }else{
 			  		alert('登录失败： ' + result.msg);
 			  		changeCode();
-			  		$("#identificationCode").val('')
+			  		$("#identificationCode").val('');
 			  }
 		  }
 		});
