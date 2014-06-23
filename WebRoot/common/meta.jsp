@@ -7,12 +7,15 @@
 %>
 
 <c:set var="ctx" value="<%=request.getContextPath() %>"/>
-<script src="${ctx }/js/jquery-1.10.2.min.js" type="text/javascript"></script>
-<script src="${ctx }/js/ui/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
-<script src="${ctx }/js/validform_v5.2_min.js" type="text/javascript"></script>
+<script src="${ctx }/js/jquery-1.10.2.js" type="text/javascript"></script>
+<script src="${ctx }/js/easyui/jquery.easyui.min.js" type="text/javascript"></script>
+<script src="${ctx }/js/easyui/locale/easyui-lang-zh_CN.js" type="text/javascript"></script>
+<script src="${ctx }/js/uploadify-v3.1/jquery.uploadify-3.1.min.js" type="text/javascript"></script>
+<script src="${ctx }/js/ztree/jquery.ztree.all-3.5.js" type="text/javascript"></script>
+<script src="${ctx }/js/my97DatePicker/wdatePicker.js" type="text/javascript"></script>
+<script src="${ctx }/js/my97DatePicker/lang/zh-cn.js" type="text/javascript"></script>
+
+
+<link rel="stylesheet" href="${ctx }/css/icon.css"/>
+<link rel="stylesheet" href="${ctx }/css/easyui.css"/>
 <link rel="stylesheet" href="${ctx }/css/zTreeStyle/zTreeStyle.css" type="text/css">
-<link rel="stylesheet" href="${ctx }/css/ui/jquery-ui-1.10.3.custom.min.css">
-<link rel="stylesheet" href="${ctx }/css/jqGrid/ui.jqgrid.css">
-<script src="${ctx }/js/ztree/jquery.ztree.all-3.5.min.js" type="text/javascript"></script>
-<script type="text/javascript" src="${ctx }/js/jqGrid/jquery.jqGrid.min.js"></script>
-<script type="text/javascript" src="${ctx }/js/jqGrid/i18n/grid.locale-cn.js"></script>
