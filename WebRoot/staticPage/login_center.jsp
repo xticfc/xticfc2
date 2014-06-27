@@ -10,7 +10,7 @@
 <link href="${ctx}/css/login.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
 	function changeCode() {  
-	    $('#kaptchaImage').hide().attr('src', '${ctx }/login/getKaptchaImage?clientType=web&a=' + Math.floor(Math.random()*100) ).fadeIn();  
+	    $('#kaptchaImage').hide().attr('src', '${ctx }/login/getKaptchaImage?&a=' + Math.floor(Math.random()*100) ).fadeIn();  
 	}
 	function doSubmit(){
 		var username = $("#username").val();
@@ -33,7 +33,7 @@
 		}
 		$.ajax({
 		  type: 'POST',
-		  url: "${ctx }/login/webLogin?clientType=web",
+		  url: "${ctx }/login/webLogin",
 		  data: {username:username,password:password,identificationCode:identificationCode},
 		  dataType:"json",
 		  timeout: 10000,
@@ -44,7 +44,7 @@
 		  },
 		  success: function(result){
 			  if(result.success){
-			  		top.document.location.href="${ctx}/main/index?clientType=web";
+			  		top.document.location.href="${ctx}/main/index";
 			  }else{
 			  		alert('登录失败： ' + result.msg);
 			  		changeCode();
@@ -99,7 +99,6 @@
        </div>
       </div>
       <div class="dl_bt">
-      	   <input type="hidden" name="clientType" value="web"/>
            <input type="button" class="button1" id="doSubmit" value=" "/>
        </div>
     </div>

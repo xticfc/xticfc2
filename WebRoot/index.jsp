@@ -6,10 +6,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="x-ua-compatible" content="ie=7" />
 <title>xticfc</title>
-<link href="${ctx }/css/global.css" rel="stylesheet" type="text/css" />
-<link href="${ctx }/css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
-	top.document.location.href="${ctx }/main/index?clientType=web";
+	top.document.location.href="${ctx }/main/index";
 </script>
 </head>
 
