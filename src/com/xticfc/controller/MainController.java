@@ -31,6 +31,17 @@ public class MainController {
 		return "/views/main/index";
 		
 	}
+	@RequestMapping(value = "/index2")
+	public String index2(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		User user = (User)request.getSession().getAttribute("user");
+		if(null != user){
+			List<Map<String,Object>> result = funcService.getFuncs(user);
+			request.setAttribute("funcs", result);
+		}
+		return "/views/main/index2";
+		
+	}
 	@RequestMapping(value = "/newIndex")
 	public String newIndex(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
