@@ -14,8 +14,13 @@
 <script src="${ctx }/js/ztree/jquery.ztree.all-3.5.js" type="text/javascript"></script>
 <script src="${ctx }/js/my97DatePicker/wdatePicker.js" type="text/javascript"></script>
 <script src="${ctx }/js/my97DatePicker/lang/zh-cn.js" type="text/javascript"></script>
+<script src="${ctx }/js/ligerui.min.js" type="text/javascript"></script>
+<script src="${ctx }/js/jquery.paginate.js" type="text/javascript"></script>
+<script src="${ctx }/js/util.js" type="text/javascript"></script>
 
 
 <link rel="stylesheet" href="${ctx }/css/icon.css"/>
 <link rel="stylesheet" href="${ctx }/css/easyui.css"/>
 <link rel="stylesheet" href="${ctx }/css/zTreeStyle/zTreeStyle.css" type="text/css">
+<link rel="stylesheet" href="${ctx }/css/liger-ui/Gray/css/all.css" type="text/css">
+<link rel="stylesheet" href="${ctx }/css/jpaginate/style.css" type="text/css">
