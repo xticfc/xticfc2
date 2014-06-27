@@ -15,7 +15,7 @@
 			async:{
 				enable:true,
 				autoParam:["id"],
-				url:"${ctx}/org/getOrgTreeByUserFunc?clientType=web"
+				url:"${ctx}/org/getOrgTreeByUserFunc"
 			},
 			view: {
 				selectedMulti: false,
@@ -77,7 +77,7 @@
 	
 	function doDelete(id){
 		if(confirm("确定删除？")){
-			url = "${ctx }/org/delete?clientType=web&id="+id;
+			url = "${ctx }/org/delete?id="+id;
 			window.location.href=url;
 		}else{
 			return false;
@@ -145,7 +145,7 @@
 		});
 	 
 		$("#maingrid").ligerGrid({
-			url:"${ctx }/org/list?clientType=web",
+			url:"${ctx }/org/list",
 			root:'result',
 			record:'total',
 			alternatingRow:true,
@@ -164,7 +164,7 @@
 				    display: '操作', isAllowHide: false,width:150,
 				    render: function (row){
 				        var result = '';
-				        result += "<img src=\"${ctx }/images/037.gif\" width=\"9\" height=\"9\" />&nbsp;[<a href=\"${ctx }/org/gotoModify?clientType=web&id="+row.id+"\">修改</a>]";
+				        result += "<img src=\"${ctx }/images/037.gif\" width=\"9\" height=\"9\" />&nbsp;[<a href=\"${ctx }/org/gotoModify?id="+row.id+"\">修改</a>]";
 				        result += "&nbsp;&nbsp;&nbsp;&nbsp;";
 				        result += "<img src=\"${ctx }/images/037.gif\" width=\"9\" height=\"9\" />&nbsp;[<a href=\"#\" onclick=\"doDelete('"+row.id+"');\">删除</a>]";
 				        return result;
@@ -184,7 +184,7 @@
    <table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr>
         <td align="left" >
-        	<form action="${ctx }/org/search?clientType=web" method="post" id="searchForm">
+        	<form action="${ctx }/org/search" method="post" id="searchForm">
 	             <table width="500" border="0" cellspacing="0" cellpadding="0">
 	              <tr>
 	                <td width="400">   
@@ -203,7 +203,7 @@
           <table width="100%" border="0" cellspacing="0" cellpadding="0" >
               <tr>
                 <td align="right">    
-                  <a href="${ctx }/org/gotoAdd?clientType=web" class="bsty0"></a>
+                  <a href="${ctx }/org/gotoAdd" class="bsty0"></a>
                 </td>
               </tr>
             </table>

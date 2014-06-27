@@ -11,7 +11,7 @@
 <script type="text/javascript">
 
 	function doCancel(){
-		document.location.href="${ctx }/report/index?clientType=web";
+		document.location.href="${ctx }/report/index";
 	}
 	
 	function uploadfile(){
@@ -24,7 +24,7 @@
 			callback:function(data){
 				if(data.result == 'true'){
 					$.Hidemsg(); //公用方法关闭信息提示框;显示方法是$.Showmsg("message goes here.");
-					document.location.href="${ctx }/report/index?clientType=web";
+					document.location.href="${ctx }/report/index";
 				}else{
 					alert('保存失败，请稍候再试。。。');
 				}
@@ -72,7 +72,7 @@
 	       	'requeueErrors'	: false,			//如果上传出错,是否再次出现在队列中并上传.可先true和false,默认是false
 	       	'successTimeout': 10,			//文件上传完成后,等待服务器返回信息的时间(秒).超过时间没有返回的话,插件认为返回了成功
 	        'swf': '${ctx}/js/uploadify-v3.1/uploadify.swf',//swf文件的路径,本文件是插件自带的,不可用其它的代替.本参数不可省略
-	        'uploader': '${ctx}/report/modify?clientType=web',//服务器URL.本参数不可省略
+	        'uploader': '${ctx}/report/modify',//服务器URL.本参数不可省略
 	        'uploadLimit'	: 999,			//限制总上传文件数,默认是999
 	        'width'	:100,					//选择文件按钮的宽度,不需要加上'px'字符
 	        'auto': false,					//是否自动上传,可选true和false
@@ -82,7 +82,7 @@
 	        	$("#uploadify").uploadify("settings", "buttonText", "选择");
 	        },
 	        'onUploadSuccess' : function(file, data, response) {//每个上传完成并成功的文件都会触发本事件
-	           document.location.href="${ctx }/report/index?clientType=web";
+	           document.location.href="${ctx }/report/index";
 	        },
 	        'onUploadStart' : function(file) {//在文件被上传前触发
 	        	$("#uploadify").uploadify("settings", "formData", {'id':$("#id").val(),'name':$("#name").val(),'dbname':$("#dbname").val(),'code':$("#code").val(),'period':$("#period").val(),'zw':$("#zw").val(),'reportstyle':$("#reportstyle").val(),'status':$("#status").val(),'tempflag':'1'});
@@ -99,7 +99,7 @@
         <h1 class="tm2">报表更新</h1>
     </div>
     <div class="tabCon">
-    	<form action="${ctx }/report/modify?clientType=web" id="form1" method="post">
+    	<form action="${ctx }/report/modify" id="form1" method="post">
 	       <table width="100%" class="bus_table"  border="0" cellspacing="0" cellpadding="0">
 	            <tr>
 	                <td  class="busTd_l">名称：</td>

@@ -39,7 +39,7 @@
 	
 	function doDelete(id){
 		if(confirm("确定删除？")){
-			document.location.href="${ctx}/mmsUser/delete?clientType=web&id="+id;
+			document.location.href="${ctx}/mmsUser/delete?id="+id;
 		}else{
 			return false;
 		}
@@ -80,7 +80,7 @@
 			doSearch();
 		});
 		$("#maingrid").ligerGrid({
-			url:"${ctx }/mmsUser/list?clientType=web",
+			url:"${ctx }/mmsUser/list",
 			root:'result',
 			record:'total',
 			alternatingRow:true,
@@ -102,7 +102,7 @@
 				    display: '操作', isAllowHide: false,width:150,
 				    render: function (row){
 				        var result = '';
-				         result += "<img src=\"${ctx }/images/037.gif\" width=\"9\" height=\"9\" />&nbsp;[<a href=\"${ctx }/mmsUser/gotoModify?clientType=web&id="+row.id+"\">修改</a>]";
+				         result += "<img src=\"${ctx }/images/037.gif\" width=\"9\" height=\"9\" />&nbsp;[<a href=\"${ctx }/mmsUser/gotoModify?id="+row.id+"\">修改</a>]";
 				        result += "&nbsp;&nbsp;&nbsp;&nbsp;";
 				        result += "<img src=\"${ctx }/images/037.gif\" width=\"9\" height=\"9\" />&nbsp;[<a href=\"#\" onclick=\"doDelete('"+row.id+"');\">删除</a>]";
 				        return result;
@@ -137,7 +137,7 @@
           <table width="100%" border="0" cellspacing="0" cellpadding="0" >
               <tr>
                 <td align="right">    
-                  <a href="${ctx }/mmsUser/gotoAdd?clientType=web" class="bsty0"></a>
+                  <a href="${ctx }/mmsUser/gotoAdd" class="bsty0"></a>
                 </td>
               </tr>
             </table>

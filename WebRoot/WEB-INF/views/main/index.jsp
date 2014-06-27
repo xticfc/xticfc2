@@ -70,7 +70,7 @@
     </div>
     <div data-options="region:'center'">
     	<div id="tt" class="easyui-tabs" data-options="fit:true,border:false,plain:false">
-    		<div id="abc" title="首页" style="overflow: hidden; height: 100%; width: 100%;">
+    		<div id="abc" title="首页" style=" height: 100%; width: 100%;">
     			<iframe id="content" src="${ctx }/datePicker/index" style=" border: 0; overflow: hidden;" ></iframe>
     		</div>
     	</div>

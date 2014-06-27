@@ -17,7 +17,7 @@
 	function getZwmc(zwid){
 		var name;
 		$.ajax({
-			url:"${ctx }/zw/getZwmc?clientType=web",
+			url:"${ctx }/zw/getZwmc",
 			type:"post",
 			async:false,
 			dataType:"json",
@@ -72,7 +72,7 @@
 			callback:function(data){
 				if(data.result == '成功'){
 					$.Hidemsg(); //公用方法关闭信息提示框;显示方法是$.Showmsg("message goes here.");
-					document.location.href="${ctx }/ywxt/index?clientType=web";
+					document.location.href="${ctx }/ywxt/index";
 				}else{
 					alert('保存失败，请稍候再试。。。');
 				}
@@ -85,7 +85,7 @@
 	function showid(sysid,code){
 		var input;
 		$.ajax({
-			url:"${ctx }/tableinfo/getInputBm?clientType=web",
+			url:"${ctx }/tableinfo/getInputBm",
 			type:"post",
 			async:false,
 			dataType:"json",
@@ -110,7 +110,7 @@
 			v.loadData(true);
 		});
 		$("#maingrid").ligerGrid({
-			url:"${ctx }/tableinfo/list?clientType=web",
+			url:"${ctx }/tableinfo/list",
 			root:'result',
 			record:'total',
 			alternatingRow:true,

@@ -19,14 +19,14 @@
 			<td width="195" name="fmTitle" align="center" valign="top">
 				<div class="tm1"><img src="${ctx }/images/tmbg.jpg"></div>
 				<iframe id="leftFrame" height="100%" width="195" marginwidth="0"
-					marginheight="0" src="${ctx }/main/left?clientType=web" border="0" frameborder="0"
+					marginheight="0" src="${ctx }/main/left" border="0" frameborder="0"
 					scrolling="no"> 浏览器不支持嵌入式框架，或被配置为不显示嵌入式框架。
 				</iframe>
 			</td>
 			<td width="4"></td>
 			<td align="left" valign="top">
 				<iframe id="rightFrame"
-					height="100%" width="100%" src="${ctx }/main/right?clientType=web" name="rightFrame"
+					height="100%" width="100%" src="${ctx }/main/right" name="rightFrame"
 					border="0" frameborder="0"> 浏览器不支持嵌入式框架，或被配置为不显示嵌入式框架。
 				</iframe>
 			</td>

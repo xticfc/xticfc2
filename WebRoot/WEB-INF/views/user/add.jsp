@@ -10,7 +10,7 @@
 <script type="text/javascript">
 
 	function doCancel(){
-		document.location.href="${ctx }/user/index?clientType=web";
+		document.location.href="${ctx }/user/index";
 	}
 	
 	$(function(){
@@ -22,7 +22,7 @@
 			callback:function(data){
 				if(data.result == '成功'){
 					$.Hidemsg(); //公用方法关闭信息提示框;显示方法是$.Showmsg("message goes here.");
-					document.location.href="${ctx }/user/index?clientType=web";
+					document.location.href="${ctx }/user/index";
 				}else{
 					alert('保存失败，请稍候再试。。。');
 				}
@@ -41,7 +41,7 @@
         <h1 class="tm2">新增用户</h1>
     </div>
     <div class="tabCon">
-    	<form action="${ctx }/user/add?clientType=web" id="form1" method="post">
+    	<form action="${ctx }/user/add" id="form1" method="post">
 	        <table width="100%" class="bus_table"  border="0" cellspacing="0" cellpadding="0">
 	            <tr>
 	                <td class="busTd_l">名称：</td>

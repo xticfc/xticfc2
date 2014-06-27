@@ -12,7 +12,7 @@
 </style>
 </head>
 <frameset rows="43,*" cols="*" framespacing="0" frameborder="no" border="0" id="aa" >
-  <frame  id="wzFrame" src="${ctx }/main/weizhi?clientType=web&funcSubId=${funcSub.funcid }" name="login_topFrame" scrolling="No" noresize="noresize"  />
-  <frame  id="mainFrame"  name="mainFrame" style="border-left:1px solid #cfdbe9; "  src="${ctx }/${funcSub.url }?clientType=web&funcSubId=${funcSub.funcid }" />
+  <frame  id="wzFrame" src="${ctx }/main/weizhi?funcSubId=${funcSub.funcid }" name="login_topFrame" scrolling="No" noresize="noresize"  />
+  <frame  id="mainFrame"  name="mainFrame" style="border-left:1px solid #cfdbe9; "  src="${ctx }/${funcSub.url }?funcSubId=${funcSub.funcid }" />
 </frameset>
 </html>

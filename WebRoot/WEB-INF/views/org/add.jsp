@@ -13,7 +13,7 @@
 			async:{
 				enable:true,
 				autoParam:["id"],
-				url:"${ctx}/org/getOrgTreeByUserFunc?clientType=web"
+				url:"${ctx}/org/getOrgTreeByUserFunc"
 			},
 			view: {
 				selectedMulti: false,
@@ -71,7 +71,7 @@
 
 
 	function doCancel(){
-		document.location.href="${ctx }/org/index?clientType=web";
+		document.location.href="${ctx }/org/index";
 	}
 	
 	$(function(){
@@ -83,7 +83,7 @@
 			callback:function(data){
 				if(data.result == '成功'){
 					$.Hidemsg(); //公用方法关闭信息提示框;显示方法是$.Showmsg("message goes here.");
-					document.location.href="${ctx }/org/index?clientType=web";
+					document.location.href="${ctx }/org/index";
 				}else if(data.result == 'ID不可用'){
 					alert('保存失败，ID不可用!');
 				}else{
@@ -106,7 +106,7 @@
         <h1 class="tm2">新增站点</h1>
     </div>
     <div class="tabCon">
-    	<form action="${ctx }/org/add?clientType=web" id="form1" method="post">
+    	<form action="${ctx }/org/add" id="form1" method="post">
 	        <table width="100%" class="bus_table"  border="0" cellspacing="0" cellpadding="0">
 	            <tr>
 	                <td  class="busTd_l">ID：</td>

@@ -62,7 +62,7 @@
    <table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr>
         <td align="left" >
-        	<form action="${ctx }/org/search?clientType=web" method="post" id="searchForm">
+        	<form action="${ctx }/org/search" method="post" id="searchForm">
 	             <table width="500" border="0" cellspacing="0" cellpadding="0">
 	              <tr>
 	                <td width="400">   
@@ -81,7 +81,7 @@
           <table width="100%" border="0" cellspacing="0" cellpadding="0" >
               <tr>
                 <td align="right">    
-                  <a href="${ctx }/org/gotoAdd?clientType=web" class="bsty0"></a>
+                  <a href="${ctx }/org/gotoAdd" class="bsty0"></a>
                 </td>
               </tr>
             </table>

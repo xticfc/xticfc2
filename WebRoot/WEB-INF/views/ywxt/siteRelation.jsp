@@ -13,7 +13,7 @@
 			async:{
 				enable:true,
 				autoParam:["id"],
-				url:"${ctx}/org/getOrgTreeByUserFunc?clientType=web"
+				url:"${ctx}/org/getOrgTreeByUserFunc"
 			},
 			view: {
 				selectedMulti: false,
@@ -101,7 +101,7 @@
 			callback:function(data){
 				if(data.result == '成功'){
 					$.Hidemsg(); //公用方法关闭信息提示框;显示方法是$.Showmsg("message goes here.");
-					document.location.href="${ctx }/ywxt/index?clientType=web";
+					document.location.href="${ctx }/ywxt/index";
 				}else{
 					alert('保存失败，请稍候再试。。。');
 				}
@@ -114,7 +114,7 @@
 	function showid(sysid,sxid){
 		var input;
 		$.ajax({
-			url:"${ctx }/org/getInputBm?clientType=web",
+			url:"${ctx }/org/getInputBm",
 			type:"post",
 			async:false,
 			dataType:"json",
@@ -130,7 +130,7 @@
 	
 	$(function(){
 		$("#maingrid").ligerGrid({
-			url:"${ctx }/ywxt/list?clientType=web",
+			url:"${ctx }/ywxt/list",
 			root:'result',
 			record:'total',
 			alternatingRow:true,
@@ -200,7 +200,7 @@
    <table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr>
         <td align="left" >
-        	<form action="${ctx }/notice/search?clientType=web" method="post" id="searchForm">
+        	<form action="${ctx }/notice/search" method="post" id="searchForm">
 	            <table width="500" border="0" cellspacing="0" cellpadding="0">
 	              <tr>
 	                <td width="400">
@@ -223,7 +223,7 @@
       </tr>
   </table>
  </div>
-<form action="${ctx }/org/saveSiteRelation?clientType=web" method="post" id="saveSiteRelationForm">
+<form action="${ctx }/org/saveSiteRelation" method="post" id="saveSiteRelationForm">
 	<div class="tabCon" id="maingrid">
 	</div>
 </form>

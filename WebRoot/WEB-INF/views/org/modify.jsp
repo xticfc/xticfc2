@@ -14,7 +14,7 @@
 			async:{
 				enable:true,
 				autoParam:["id"],
-				url:"${ctx}/org/getOrgTreeByUserFunc?clientType=web"
+				url:"${ctx}/org/getOrgTreeByUserFunc"
 			},
 			view: {
 				selectedMulti: false,
@@ -71,7 +71,7 @@
 		
 	
 	function doCancel(){
-		document.location.href="${ctx }/org/index?clientType=web";
+		document.location.href="${ctx }/org/index";
 	}
 	
 	
@@ -84,7 +84,7 @@
 			callback:function(data){
 				if(data.result == '成功'){
 					$.Hidemsg(); //公用方法关闭信息提示框;显示方法是$.Showmsg("message goes here.");
-					document.location.href="${ctx }/org/index?clientType=web";
+					document.location.href="${ctx }/org/index";
 				}else if(data.result == '失败'){
 					alert('保存失败，站点不存在!');
 				}else{
@@ -105,7 +105,7 @@
         <h1 class="tm2">修改用户反馈地址</h1>
     </div>
     <div class="tabCon">
-    	<form action="${ctx }/org/modify?clientType=web" id="form1" method="post">
+    	<form action="${ctx }/org/modify" id="form1" method="post">
 	        <table width="100%" class="bus_table"  border="0" cellspacing="0" cellpadding="0">
 	            <tr>
 	                <td  class="busTd_l">ID：</td>

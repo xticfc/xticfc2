@@ -40,7 +40,7 @@
 	function doDelete(systemTableId){
 		if(confirm("确定删除？")){
 			$.ajax({
-				url:"${ctx}/ywxt/delete?clientType=web",
+				url:"${ctx}/ywxt/delete",
 				type:"post",
 				async:false,
 				dataType:"json",
@@ -101,7 +101,7 @@
 		});
 		
 		$("#maingrid").ligerGrid({
-			url:"${ctx }/ywxt/list?clientType=web",
+			url:"${ctx }/ywxt/list",
 			root:'result',
 			record:'total',
 			alternatingRow:true,
@@ -127,11 +127,11 @@
 				    display: '操作', isAllowHide: false,width:300,
 				    render: function (row){
 				        var result = '';
-				        result += '<img src="${ctx }/images/037.gif" width="9" height="9" />&nbsp;[<a href="${ctx }/ywxt/gotoModify?clientType=web&systemTableId='+row.id+'">修改</a>]';
+				        result += '<img src="${ctx }/images/037.gif" width="9" height="9" />&nbsp;[<a href="${ctx }/ywxt/gotoModify?systemTableId='+row.id+'">修改</a>]';
 				        result += '&nbsp;&nbsp;&nbsp;&nbsp;';
 				        result += '<img src="${ctx }/images/037.gif" width="9" height="9" />&nbsp;[<a href="#" onclick="doDelete(\''+row.id+'\');">删除</a>]';
-				        result += '<img src="${ctx }/images/037.gif" width="9" height="9" />&nbsp;[<a href="${ctx }/org/siteRelation?clientType=web&systemid='+row.id+'">站点关联</a>]';
-				        result += '<img src="${ctx }/images/037.gif" width="9" height="9" />&nbsp;[<a href="${ctx }/tableinfo/reportRelation?clientType=web&systemid='+row.id+'">报表关联</a>]';
+				        result += '<img src="${ctx }/images/037.gif" width="9" height="9" />&nbsp;[<a href="${ctx }/org/siteRelation?systemid='+row.id+'">站点关联</a>]';
+				        result += '<img src="${ctx }/images/037.gif" width="9" height="9" />&nbsp;[<a href="${ctx }/tableinfo/reportRelation?systemid='+row.id+'">报表关联</a>]';
 				        return result;
 				    }
 				}

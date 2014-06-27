@@ -25,7 +25,7 @@
 </script>
 <script type="text/javascript">
 	function doCancel(){
-		document.location.href="${ctx }/ywxt/index?clientType=web";
+		document.location.href="${ctx }/ywxt/index";
 	}
 	
 	
@@ -121,7 +121,7 @@
 			callback:function(data){
 				if(data.result == '成功'){
 					$.Hidemsg(); //公用方法关闭信息提示框;显示方法是$.Showmsg("message goes here.");
-					document.location.href="${ctx }/ywxt/index?clientType=web";
+					document.location.href="${ctx }/ywxt/index";
 				}else{
 					alert('保存失败，请稍候再试。。。');
 				}
@@ -135,7 +135,7 @@
 		
 	
 		$("#maingrid").ligerGrid({
-			url:"${ctx }/ywxt/getSystemTableInfoRelation?clientType=web",
+			url:"${ctx }/ywxt/getSystemTableInfoRelation",
 			root:'result',
 			record:'total',
 			alternatingRow:true,
@@ -185,7 +185,7 @@
         <h1 class="tm2">新增业务系统</h1>
     </div>
     <div class="tabCon">
-    	<form action="${ctx }/ywxt/add?clientType=web" id="form1" method="post">
+    	<form action="${ctx }/ywxt/add" id="form1" method="post">
 	        <table width="100%" class="bus_table"  border="0" cellspacing="0" cellpadding="0">
 	            <tr>
 	                <td  class="busTd_l">系统名称：</td>

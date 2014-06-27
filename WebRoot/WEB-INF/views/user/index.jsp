@@ -11,7 +11,7 @@
 	
 	function doDelete(id){
 		if(confirm("确定删除？")){
-			url = "${ctx }/user/delete?clientType=web&id="+id;
+			url = "${ctx }/user/delete?id="+id;
 			window.location.href=url;
 		}else{
 			return false;
@@ -66,7 +66,7 @@
 			doSearch();
 		});
 		$("#maingrid").ligerGrid({
-			url:"${ctx }/user/list?clientType=web",
+			url:"${ctx }/user/list",
 			root:'result',
 			record:'total',
 			alternatingRow:true,
@@ -113,7 +113,7 @@
 				    display: '操作', isAllowHide: false,width:150,
 				    render: function (row){
 				        var result = '';
-				        result += "<img src=\"${ctx }/images/037.gif\" width=\"9\" height=\"9\" />&nbsp;[<a href=\"${ctx }/user/gotoModify?clientType=web&id="+row.userId+"\">修改</a>]";
+				        result += "<img src=\"${ctx }/images/037.gif\" width=\"9\" height=\"9\" />&nbsp;[<a href=\"${ctx }/user/gotoModify?id="+row.userId+"\">修改</a>]";
 				        result += "&nbsp;&nbsp;&nbsp;&nbsp;";
 				        result += "<img src=\"${ctx }/images/037.gif\" width=\"9\" height=\"9\" />&nbsp;[<a href=\"#\" onclick=\"doDelete('"+row.userId+"');\">删除</a>]";
 				        return result;
